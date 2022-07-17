@@ -1,0 +1,9 @@
+<html>
+    <head></head>
+    <body>
+        @include('includes.suppliertop')
+        <div>
+            @yield('content')
+        </div>
+    </body>
+</html>
