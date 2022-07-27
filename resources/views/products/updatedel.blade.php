@@ -48,7 +48,9 @@ table{
                     @enderror
                     <input class="btn" type="submit" value="Update">
         </th>
-    </tr>
+    </tr>  
+
+    
         
 </form>
 
