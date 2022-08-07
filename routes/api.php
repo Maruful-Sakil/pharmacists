@@ -22,3 +22,4 @@ Route::post('/supplier/create',[APIController::class,'create']);
 Route::get('/supplier/get',[APIController::class,'get']);
 Route::get('/product/list',[APIController::class,'list']);
 Route::get('/buyer/list',[APIController::class,'blist']);
+Route::delete('/delete/{product_id}',[APIController::class,'delete']);

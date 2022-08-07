@@ -13,15 +13,15 @@ class APIController extends Controller
     //
     function create(Request $req){
         $validator = Validator::make($req->all(),[
-            "name"=>"required",
-            "email"=>"required",
-            "password"=>"required",
+            "name"=>"required|max:15|min:3",
+            "email"=>"required|unique:suppliers,email",
+            "password"=>"required|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/",
             "dob"=>"required",
-            "gender"=>"required",
+            "gender"=>"required|in:male,female",
             "conf_password"=>"required|same:password"
         ]);
         if($validator->fails()){
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(),422);
         }
         $sp = new Supplier();
         $sp->name = $req->input('name');
@@ -52,5 +52,15 @@ class APIController extends Controller
     function blist(){
         $data = Buyer::all();
         return response()->json($data);
+    }
+    function delete($product_id){
+        $data = Product::find($product_id);
+        $data->delete();
+        return response()->json(
+            [
+                "msg"=>"Deleted Successfully",
+                "data"=>$data       
+            ]
+        );
     }
 }
