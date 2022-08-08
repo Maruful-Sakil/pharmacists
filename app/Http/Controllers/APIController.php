@@ -63,4 +63,18 @@ class APIController extends Controller
             ]
         );
     }
+    function bupdate(Request $req,$id){
+        $data = Buyer::where('id',$id)->first();
+        $data->name = $req->input('name');
+        $data->email =$req->input('email');
+        $data->number =$req->input('number');
+        $data->save();
+
+        return response()->json(
+            [
+                "msg"=>"Updated Successfully",
+                "data"=>$data       
+            ]
+        );
+    }
 }
