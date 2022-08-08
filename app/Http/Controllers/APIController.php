@@ -77,4 +77,17 @@ class APIController extends Controller
             ]
         );
     }
+    function supdate(Request $req,$suplliers_id){
+        $data = Supplier::where('suplliers_id',$suplliers_id)->first();
+        $data->name = $req->input('name');
+        $data->email =$req->input('email');
+        $data->save();
+
+        return response()->json(
+            [
+                "msg"=>"Edited Successfully",
+                "data"=>$data       
+            ]
+        );
+    }
 }
