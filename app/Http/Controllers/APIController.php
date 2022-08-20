@@ -6,7 +6,11 @@ use App\Models\Buyer;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use App\Models\Token;
 use Illuminate\Support\Facades\Validator;
+use Datetime;
+use Illuminate\Support\Str;
+
 
 class APIController extends Controller
 {
@@ -90,4 +94,19 @@ class APIController extends Controller
             ]
         );
     }
+    function login(Request $req){
+        $user = Supplier::where('email',$req->email)
+                        ->where('password',$req->password)->first();
+        if($user){
+            $key = Str::random(67);
+            $token = new Token();
+            $token->tkey = $key;
+            $token->user_id = 1;
+            $token->created_at = new Datetime();
+            $token->save();
+            return response()->json($token);
+        }
+        return response()->json(["msg"=>"Username password invalid"],404);
+    }
+
 }
