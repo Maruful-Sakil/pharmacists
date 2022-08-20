@@ -95,6 +95,13 @@ class APIController extends Controller
         );
     }
     function login(Request $req){
+        $validator = Validator::make($req->all(),[
+            "email"=>"required|unique:suppliers,email",
+            "password"=>"required|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/"
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors(),422);
+        }
         $user = Supplier::where('email',$req->email)
                         ->where('password',$req->password)->first();
         if($user){
@@ -106,7 +113,14 @@ class APIController extends Controller
             $token->save();
             return response()->json($token);
         }
-        return response()->json(["msg"=>"Username password invalid"],404);
+        return response()->json(["msg"=>"Email password invalid"],404);
+    }
+    function logout(Request $req){
+        $tk = $req->token;
+        $token = Token::where('tkey',$tk)->first();
+        $token->expired_at = new Datetime();
+        $token->save();
+        return response()->json(["msg"=>"Logged out"]);
     }
 
 }

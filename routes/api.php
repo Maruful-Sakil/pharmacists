@@ -26,3 +26,4 @@ Route::delete('/delete/{product_id}',[APIController::class,'delete']);
 Route::put('/bupdate/{id}',[APIController::class,'bupdate']);
 Route::put('/supdate/{suplliers_id}',[APIController::class,'supdate']);
 Route::post('/login',[APIController::class,'login']);
+Route::post('/logout',[APIController::class,'logout']);
